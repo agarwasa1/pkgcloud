@@ -15,15 +15,27 @@ client.getClouds(config, function (err, resp) {
     if (err) {
         console.log(err);
     }
-    console.log(resp[0].toJSON());
+    //console.log(resp[0].toJSON());
 });
 
-client.getCloud(config, "ec9060418bd19b6052dbff9258292b49",function (err, resp) {
+client.getCloud(config, "ec9060418bd19b6052dbff9258292b49",function (err, cloud) {
     if (err) {
         console.log(err);
     }
-    if (resp) {
-        console.log(resp.toJSON());
+    if (cloud) {
+        cloud = cloud.toJSON()
+        cloud.bearerToken = config.bearerToken
+        cloud.keystoneAuthVersion = 'v3'
+        cloud.provider = 'bluemix'
+        console.log(cloud)
+        stackClient = pkgcloud.orchestration.createClient(cloud)
+        stackClient.getStacks(function (err, stacks) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log(stacks);
+        }); 
     } else {
         console.log('cannot find the cloud with the specified id')
     }

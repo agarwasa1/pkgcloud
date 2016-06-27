@@ -15,7 +15,6 @@ client.getClouds(config, function (err, resp) {
     if (err) {
         console.log(err);
     }
-    //console.log(resp[0].toJSON());
 });
 
 client.getCloud(config, "ec9060418bd19b6052dbff9258292b49",function (err, cloud) {
